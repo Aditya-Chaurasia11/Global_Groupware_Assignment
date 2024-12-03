@@ -2,8 +2,8 @@
 
 A modern React application for user management built with TypeScript, React Router, and Tailwind CSS. This application demonstrates authentication, user listing, editing, and deletion using the Reqres API.
 
-## Demo - 
-## Resume - https://drive.google.com/file/d/1gzNzpLq2HnZJPnLcmKoZhqvuaa1n_cD5/view?usp=drive_link
+### Demo - 
+### Resume - https://drive.google.com/file/d/1gzNzpLq2HnZJPnLcmKoZhqvuaa1n_cD5/view?usp=drive_link
 
 
 ## Features
