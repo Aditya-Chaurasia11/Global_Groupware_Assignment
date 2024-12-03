@@ -95,11 +95,12 @@ To log in, use the following credentials:
 
 ```
 src/
-├── components/          # Reusable UI components
+├── components/          # Components
 │   ├── EditUserModal.tsx
 │   ├── ProtectedRoute.tsx
+|   ├── SearchBar.tsx
 │   └── UserCard.tsx
-├── pages/              # Main page components
+├── pages/              # Pages
 │   ├── Login.tsx
 │   └── Users.tsx
 ├── services/           # API integration
@@ -108,7 +109,7 @@ src/
 │   └── user.ts
 ├── utils/              # Helper functions
 │   └── auth.ts
-└── App.tsx            # Main application component
+└── App.tsx            
 ```
 
 ## API Integration
