@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { getUsers, updateUser, deleteUser } from '../services/api';
 import { User } from '../types/user';
 import { UserCard } from '../components/UserCard';
 import { EditUserModal } from '../components/EditUserModal';
+import { SearchBar } from '../components/SearchBar';
 import { LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { removeToken } from '../utils/auth';
@@ -15,6 +16,7 @@ export function Users() {
   const [totalPages, setTotalPages] = useState(1);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchUsers();
@@ -31,6 +33,16 @@ export function Users() {
       setLoading(false);
     }
   };
+
+  const filteredUsers = useMemo(() => {
+    const query = searchQuery.toLowerCase();
+    return users.filter(
+      (user) =>
+        user.first_name.toLowerCase().includes(query) ||
+        user.last_name.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query)
+    );
+  }, [users, searchQuery]);
 
   const handleEdit = (user: User) => {
     setEditingUser(user);
@@ -85,16 +97,30 @@ export function Users() {
           </button>
         </div>
 
-        <div className="space-y-4">
-          {users.map((user) => (
-            <UserCard
-              key={user.id}
-              user={user}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))}
+        <div className="mb-6">
+          <SearchBar
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Search by name or email..."
+          />
         </div>
+
+        {filteredUsers.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500">No users found matching your search criteria.</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {filteredUsers.map((user) => (
+              <UserCard
+                key={user.id}
+                user={user}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </div>
+        )}
 
         <div className="mt-8 flex justify-center space-x-2">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
